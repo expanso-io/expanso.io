@@ -125,9 +125,9 @@ const defaultContent: ContentData = {
   how_it_works: {
     title: "From chaos to control in minutes",
     steps: [
-      { number: 1, title: "Deploy the Agent", description: "One command installs Expanso Edge anywhere - cloud VMs, Kubernetes, edge devices, or on-prem servers.", code: "curl -fsSL https://install.expanso.io | bash", time: "< 2 minutes" },
-      { number: 2, title: "Define Your Pipeline", description: "Write policies as code. Filter noise, transform data, enforce compliance - declarative and version-controlled.", code: "sources:\n  - type: kubernetes_logs\nfilters:\n  - drop: debug\ndestinations:\n  - type: snowflake", time: "5 minutes" },
-      { number: 3, title: "Watch Data Flow", description: "See filtered, governed data arrive at Snowflake, Databricks, Splunk, or any destination - with full audit trails.", time: "Real-time" }
+      { number: 1, title: "Deploy the Agent", description: "One command installs Expanso Edge anywhere - cloud VMs, Kubernetes, edge devices, or on-prem servers.", code: "curl -fsSL https://get.expanso.io/edge/install.sh | bash\nexpanso-edge bootstrap --token YOUR_TOKEN", time: "< 2 minutes" },
+      { number: 2, title: "Define Your Pipeline", description: "Write pipelines as code. Transform data with Bloblang, filter noise, route to any destination - all version-controlled in Git.", code: "input:\n  file:\n    paths: [\"/var/log/app/*.log\"]\npipeline:\n  processors:\n    - mapping: |\n        root = if this.level == \"ERROR\" { this }\n        else { deleted() }\noutput:\n  aws_s3:\n    bucket: processed-logs\n    path: logs/${!timestamp_unix()}.json", time: "5 minutes" },
+      { number: 3, title: "Watch Data Flow", description: "See filtered, governed data arrive at S3, Snowflake, Kafka, or any destination - with full audit trails.", time: "Real-time" }
     ]
   },
   proof: {
@@ -201,10 +201,11 @@ const TerminalBlock = () => {
       { text: '', delay: 2000 },
       { text: 'WARNING: 115 agents detected', type: 'error', delay: 2200 },
       { text: '', delay: 2500 },
-      { text: '$ expanso unify --all', type: 'command', delay: 3000 },
-      { text: 'Consolidating agents...', delay: 3400 },
-      { text: 'All pipelines migrated', type: 'success', delay: 4000 },
-      { text: '1 agent. 100% coverage.', type: 'success', delay: 4400 },
+      { text: '$ curl -fsSL https://get.expanso.io/edge/install.sh | bash', type: 'command', delay: 3000 },
+      { text: 'Installing expanso-edge...', delay: 3400 },
+      { text: 'expanso-edge installed', type: 'success', delay: 3800 },
+      { text: '$ expanso-edge bootstrap --token <token>', type: 'command', delay: 4200 },
+      { text: 'Node registered. Ready for pipelines.', type: 'success', delay: 4600 },
     ]
 
     const timers = sequence.map(({ text, delay, type }) => {
