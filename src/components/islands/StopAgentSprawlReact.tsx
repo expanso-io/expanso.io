@@ -187,24 +187,24 @@ const Button = ({ children, variant = 'primary', href, className = '' }: ButtonP
 
 // Terminal Animation Component
 const TerminalBlock = () => {
-  const [lines, setLines] = useState<Array<string | { text: string; type?: string }>>(['$ agent-inventory', ''])
+  const [lines, setLines] = useState<Array<string | { text: string; type?: string }>>(['# Current data agents on this host:', ''])
 
   useEffect(() => {
     const sequence = [
-      { text: 'Scanning infrastructure...', delay: 500 },
-      { text: '|-- splunk-forwarder    x12 nodes', delay: 800 },
-      { text: '|-- fluentd-k8s         x8 pods', delay: 1000 },
-      { text: '|-- vector-edge         x23 hosts', delay: 1200 },
-      { text: '|-- custom-etl.py       x6 crons', delay: 1400 },
-      { text: '|-- filebeat            x15 hosts', delay: 1600 },
-      { text: '`-- logstash            x9 containers', delay: 1800 },
-      { text: '', delay: 2000 },
-      { text: 'WARNING: 115 agents detected', type: 'error', delay: 2200 },
-      { text: '', delay: 2500 },
+      { text: 'splunk-forwarder    x12 nodes', delay: 500 },
+      { text: 'fluentd-k8s         x8 pods', delay: 700 },
+      { text: 'vector-edge         x23 hosts', delay: 900 },
+      { text: 'custom-etl.py       x6 crons', delay: 1100 },
+      { text: 'filebeat            x15 hosts', delay: 1300 },
+      { text: 'logstash            x9 containers', delay: 1500 },
+      { text: '', delay: 1700 },
+      { text: '# Total: 115 agents, 4 teams maintaining', type: 'error', delay: 1900 },
+      { text: '', delay: 2300 },
+      { text: '# Replace with Expanso Edge:', delay: 2600 },
       { text: '$ curl -fsSL https://get.expanso.io/edge/install.sh | bash', type: 'command', delay: 3000 },
-      { text: 'Installing expanso-edge...', delay: 3400 },
+      { text: 'Installing expanso-edge v1.2.0...', delay: 3400 },
       { text: 'expanso-edge installed', type: 'success', delay: 3800 },
-      { text: '$ expanso-edge bootstrap --token <token>', type: 'command', delay: 4200 },
+      { text: '$ expanso-edge bootstrap --token $TOKEN', type: 'command', delay: 4200 },
       { text: 'Node registered. Ready for pipelines.', type: 'success', delay: 4600 },
     ]
 
