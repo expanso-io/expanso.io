@@ -1,0 +1,1052 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Page content - could later move to content collections
+const content = {
+  hero: {
+    headline: "Stop agent sprawl.",
+    subheadline: "Control data at the source.",
+    description: "Replace dozens of single-purpose agents with one unified platform. Deploy to any infrastructure with policy-driven pipelines that self-heal - so you can build instead of maintain.",
+    cta_primary: { text: "Start Free Trial", url: "https://exso.cloud/get-started" },
+    cta_secondary: { text: "See How It Works", url: "#how-it-works" }
+  },
+  problem: {
+    eyebrow: "The Problem",
+    title: "Your infrastructure is buried in agents.",
+    description: "Every tool brings its own agent. Every team writes custom scripts. You spend your nights fixing pipelines instead of shipping features.",
+    painPoints: [
+      { title: "Splunk forwarders everywhere", description: "One per node, custom configs, constant updates" },
+      { title: "Fluentd for Kubernetes logs", description: "YAML nightmares, version drift, debugging hell" },
+      { title: "Custom scripts for compliance", description: "Brittle Python, unknown authors, 2 AM pages" },
+      { title: "Manual policy enforcement", description: "Tickets, approvals, meetings - just to move data" }
+    ]
+  },
+  solution: {
+    eyebrow: "The Solution",
+    title: "One agent. Everywhere.",
+    description: "Expanso Edge replaces your patchwork of tools with a single, policy-driven platform. Deploy to cloud, on-prem, edge, or Kubernetes - one agent, one config, total visibility.",
+    benefits: [
+      { title: "One Agent Replaces Many", description: "Splunk forwarders, Fluentd, Vector, custom scripts - all replaced by one lightweight agent." },
+      { title: "Policy-Driven, Not Code-Heavy", description: "Declarative YAML configs that version in Git. No more brittle scripts." },
+      { title: "Built-In Governance", description: "Audit trails, data lineage, and compliance enforcement - automatic from day one." },
+      { title: "Self-Healing Pipelines", description: "Automatic retries, intelligent backpressure, no data loss. Sleep through the night." }
+    ]
+  },
+  howItWorks: {
+    title: "From chaos to control in minutes",
+    steps: [
+      { number: 1, title: "Deploy the Agent", description: "One command installs Expanso Edge anywhere - cloud VMs, Kubernetes, edge devices, or on-prem servers.", code: "curl -fsSL https://install.expanso.io | bash", time: "< 2 minutes" },
+      { number: 2, title: "Define Your Pipeline", description: "Write policies as code. Filter noise, transform data, enforce compliance - declarative and version-controlled.", code: `sources:
+  - type: kubernetes_logs
+filters:
+  - drop: debug
+destinations:
+  - type: snowflake`, time: "5 minutes" },
+      { number: 3, title: "Watch Data Flow", description: "See filtered, governed data arrive at Snowflake, Databricks, Splunk, or any destination - with full audit trails.", time: "Real-time" }
+    ]
+  },
+  proof: {
+    title: "What changes when you stop the sprawl",
+    stats: [
+      { metric: "70%", label: "Less maintenance", description: "One agent to update, one config to manage" },
+      { metric: "50-70%", label: "Lower data costs", description: "Filter at source, pay for less downstream" },
+      { metric: "Minutes", label: "To deploy", description: "Not weeks of scripting and testing" }
+    ]
+  },
+  testimonial: {
+    quote: "We replaced six different agents with Expanso. My team went from spending 40% of their time on pipeline maintenance to building actual features.",
+    author: "Senior Platform Engineer",
+    company: "Fortune 500 Retailer",
+    metric: "40% → 5%",
+    metricLabel: "Time on maintenance"
+  },
+  techSpecs: {
+    title: "Built for scale",
+    specs: [
+      { value: "10,000+", label: "Nodes per cluster" },
+      { value: "< 30 seconds", label: "Config propagation" },
+      { value: "200+", label: "Connectors" },
+      { value: "99.9%", label: "Uptime SLA" }
+    ]
+  },
+  finalCta: {
+    title: "Ready to stop maintaining and start building?",
+    description: "Start free. Deploy in minutes. No credit card required.",
+    cta_primary: { text: "Start Free Trial", url: "https://exso.cloud/get-started" },
+    cta_secondary: { text: "Talk to an Engineer", url: "/book-a-demo" }
+  }
+};
+---
+
+<Layout title="Stop Agent Sprawl | Expanso" description="Replace dozens of agents with one. Deploy anywhere with built-in governance, audit trails, and unified visibility.">
+  <main class="sas">
+    <!-- Hero -->
+    <section class="sas-hero">
+      <div class="sas-hero__grid">
+        <div class="sas-hero__content">
+          <span class="sas-tag">Data Infrastructure</span>
+          <h1 class="sas-hero__title">
+            {content.hero.headline}<br>
+            <span class="sas-hero__subtitle">{content.hero.subheadline}</span>
+          </h1>
+          <p class="sas-hero__desc">{content.hero.description}</p>
+          <div class="sas-hero__actions">
+            <a href={content.hero.cta_primary.url} class="sas-btn sas-btn--cta">
+              {content.hero.cta_primary.text}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+            </a>
+            <a href={content.hero.cta_secondary.url} class="sas-btn sas-btn--ghost">{content.hero.cta_secondary.text}</a>
+          </div>
+          <div class="sas-hero__trust">
+            <span class="sas-hero__trust-dot"></span>
+            Processing 5+ PB/month across 3 continents
+          </div>
+        </div>
+
+        <!-- Terminal visualization -->
+        <div class="sas-hero__viz">
+          <div class="sas-terminal">
+            <div class="sas-terminal__bar">
+              <span class="sas-terminal__dot sas-terminal__dot--red"></span>
+              <span class="sas-terminal__dot sas-terminal__dot--yellow"></span>
+              <span class="sas-terminal__dot sas-terminal__dot--green"></span>
+              <code>~/infrastructure $ agent-inventory</code>
+            </div>
+            <div class="sas-terminal__body">
+              <div class="sas-chaos">
+                <div class="sas-chaos__line"><span class="sas-dot sas-dot--red"></span> splunk-forwarder <span class="sas-muted">x12 nodes</span></div>
+                <div class="sas-chaos__line"><span class="sas-dot sas-dot--cyan"></span> fluentd-k8s <span class="sas-muted">x8 pods</span></div>
+                <div class="sas-chaos__line"><span class="sas-dot sas-dot--green"></span> vector-edge <span class="sas-muted">x23 hosts</span></div>
+                <div class="sas-chaos__line"><span class="sas-dot sas-dot--orange"></span> custom-etl.py <span class="sas-muted">x6 crons</span></div>
+                <div class="sas-chaos__line"><span class="sas-dot sas-dot--red"></span> splunk-hf <span class="sas-muted">x4 nodes</span></div>
+                <div class="sas-chaos__line"><span class="sas-dot sas-dot--purple"></span> filebeat <span class="sas-muted">x15 hosts</span></div>
+                <div class="sas-chaos__line"><span class="sas-dot sas-dot--cyan"></span> logstash <span class="sas-muted">x9 containers</span></div>
+                <div class="sas-chaos__line sas-muted">... 38 more agents</div>
+                <div class="sas-chaos__divider"></div>
+                <div class="sas-chaos__total">
+                  <span class="sas-text--red">115 agents</span>
+                  <span class="sas-muted">// 4 teams maintaining</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="#problem" class="sas-scroll">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14m-7-7 7 7 7-7"/></svg>
+      </a>
+    </section>
+
+    <!-- Problem -->
+    <section class="sas-problem" id="problem">
+      <div class="sas-container">
+        <div class="sas-problem__header">
+          <span class="sas-tag sas-tag--red">{content.problem.eyebrow}</span>
+          <h2 class="sas-title">{content.problem.title}</h2>
+          <p class="sas-problem__lede">{content.problem.description}</p>
+        </div>
+
+        <div class="sas-problem__grid">
+          {content.problem.painPoints.map((point, i) => (
+            <article class="sas-pain">
+              <div class="sas-pain__num">0{i + 1}</div>
+              <h3 class="sas-pain__title">{point.title}</h3>
+              <p class="sas-pain__desc">{point.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Solution -->
+    <section class="sas-solution" id="solution">
+      <div class="sas-container">
+        <div class="sas-solution__intro">
+          <span class="sas-tag sas-tag--green">{content.solution.eyebrow}</span>
+          <h2 class="sas-title sas-title--xl">{content.solution.title}</h2>
+          <p class="sas-solution__desc">{content.solution.description}</p>
+        </div>
+
+        <!-- Architecture diagram -->
+        <div class="sas-arch">
+          <div class="sas-arch__diagram">
+            <svg viewBox="0 0 800 420" class="sas-arch__svg" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <pattern id="archGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+                  <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1E1E26" stroke-width="0.5"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#archGrid)"/>
+
+              <!-- Source nodes -->
+              <g class="sas-arch__sources" font-family="JetBrains Mono, monospace" font-size="11">
+                <rect x="30" y="30" width="110" height="40" fill="none" stroke="#1E1E26" stroke-width="1"/>
+                <text x="85" y="56" text-anchor="middle" fill="#9CA3AF">kubernetes</text>
+
+                <rect x="30" y="90" width="110" height="40" fill="none" stroke="#1E1E26" stroke-width="1"/>
+                <text x="85" y="116" text-anchor="middle" fill="#9CA3AF">cloud-vms</text>
+
+                <rect x="30" y="150" width="110" height="40" fill="none" stroke="#1E1E26" stroke-width="1"/>
+                <text x="85" y="176" text-anchor="middle" fill="#9CA3AF">edge-devices</text>
+
+                <rect x="30" y="210" width="110" height="40" fill="none" stroke="#1E1E26" stroke-width="1"/>
+                <text x="85" y="236" text-anchor="middle" fill="#9CA3AF">on-prem</text>
+
+                <rect x="30" y="270" width="110" height="40" fill="none" stroke="#1E1E26" stroke-width="1"/>
+                <text x="85" y="296" text-anchor="middle" fill="#9CA3AF">iot-sensors</text>
+
+                <rect x="30" y="330" width="110" height="40" fill="none" stroke="#1E1E26" stroke-width="1"/>
+                <text x="85" y="356" text-anchor="middle" fill="#9CA3AF">applications</text>
+              </g>
+
+              <!-- Expanso Agents -->
+              <g class="sas-arch__agents" font-family="JetBrains Mono, monospace">
+                {[30, 90, 150, 210, 270, 330].map(y => (
+                  <g>
+                    <rect x="180" y={y} width="90" height="40" fill="#141419" stroke="#7C3AED" stroke-width="1.5"/>
+                    <text x="225" y={y + 17} text-anchor="middle" fill="#7C3AED" font-size="9" font-weight="600">EXPANSO</text>
+                    <text x="225" y={y + 30} text-anchor="middle" fill="#9CA3AF" font-size="8">agent</text>
+                  </g>
+                ))}
+              </g>
+
+              <!-- Source to agent lines -->
+              <g stroke="#1E1E26" stroke-width="1" fill="none">
+                <line x1="140" y1="50" x2="180" y2="50"/>
+                <line x1="140" y1="110" x2="180" y2="110"/>
+                <line x1="140" y1="170" x2="180" y2="170"/>
+                <line x1="140" y1="230" x2="180" y2="230"/>
+                <line x1="140" y1="290" x2="180" y2="290"/>
+                <line x1="140" y1="350" x2="180" y2="350"/>
+              </g>
+
+              <!-- Destination nodes -->
+              <g class="sas-arch__destinations" font-family="JetBrains Mono, monospace" font-size="12">
+                <rect x="620" y="90" width="150" height="50" fill="none" stroke="#10B981" stroke-width="1.5"/>
+                <text x="695" y="122" text-anchor="middle" fill="#10B981">snowflake</text>
+
+                <rect x="620" y="185" width="150" height="50" fill="none" stroke="#10B981" stroke-width="1.5"/>
+                <text x="695" y="217" text-anchor="middle" fill="#10B981">databricks</text>
+
+                <rect x="620" y="280" width="150" height="50" fill="none" stroke="#10B981" stroke-width="1.5"/>
+                <text x="695" y="312" text-anchor="middle" fill="#10B981">splunk</text>
+              </g>
+
+              <!-- Agent to destination lines -->
+              <g stroke="#7C3AED" stroke-width="1" fill="none" opacity="0.4">
+                <path d="M270,50 Q450,50 620,115" />
+                <path d="M270,110 Q400,110 620,115" />
+                <path d="M270,110 Q450,140 620,210" />
+                <path d="M270,170 Q450,170 620,210" />
+                <path d="M270,230 Q450,230 620,210" />
+                <path d="M270,230 Q400,260 620,305" />
+                <path d="M270,290 Q450,290 620,305" />
+                <path d="M270,350 Q450,350 620,305" />
+              </g>
+
+              <!-- Data flow particles -->
+              <g fill="#7C3AED">
+                <circle r="4"><animateMotion dur="2s" repeatCount="indefinite" path="M270,50 Q450,50 620,115"/></circle>
+                <circle r="4"><animateMotion dur="2.2s" repeatCount="indefinite" path="M270,110 Q450,140 620,210" begin="0.3s"/></circle>
+                <circle r="4"><animateMotion dur="2.4s" repeatCount="indefinite" path="M270,170 Q450,170 620,210" begin="0.6s"/></circle>
+                <circle r="4"><animateMotion dur="2.1s" repeatCount="indefinite" path="M270,230 Q400,260 620,305" begin="0.9s"/></circle>
+                <circle r="4"><animateMotion dur="2.3s" repeatCount="indefinite" path="M270,290 Q450,290 620,305" begin="1.2s"/></circle>
+                <circle r="4"><animateMotion dur="2.5s" repeatCount="indefinite" path="M270,350 Q450,350 620,305" begin="1.5s"/></circle>
+              </g>
+            </svg>
+          </div>
+          <div class="sas-arch__caption">One Expanso agent per source. Direct routing to any destination.</div>
+        </div>
+
+        <!-- Benefits list -->
+        <ul class="sas-benefits">
+          {content.solution.benefits.map(benefit => (
+            <li class="sas-benefit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <div>
+                <strong>{benefit.title}</strong>
+                <span>{benefit.description}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="sas-how" id="how-it-works">
+      <div class="sas-container">
+        <h2 class="sas-title sas-title--center">{content.howItWorks.title}</h2>
+
+        <div class="sas-steps">
+          {content.howItWorks.steps.map((step, i) => (
+            <div class={`sas-step ${i === content.howItWorks.steps.length - 1 ? 'sas-step--last' : ''}`}>
+              <div class="sas-step__marker">
+                <span class="sas-step__num">{step.number}</span>
+                <span class="sas-step__time">{step.time}</span>
+              </div>
+              <div class="sas-step__content">
+                <h3 class="sas-step__title">{step.title}</h3>
+                <p class="sas-step__desc">{step.description}</p>
+                {step.code && (
+                  <div class="sas-code">
+                    <pre><code>{step.code}</code></pre>
+                    <button class="sas-code__copy" data-code={step.code}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Proof -->
+    <section class="sas-proof">
+      <div class="sas-container">
+        <h2 class="sas-title sas-title--center">{content.proof.title}</h2>
+
+        <div class="sas-stats">
+          {content.proof.stats.map(stat => (
+            <div class="sas-stat">
+              <div class="sas-stat__metric">{stat.metric}</div>
+              <div class="sas-stat__label">{stat.label}</div>
+              <div class="sas-stat__desc">{stat.description}</div>
+            </div>
+          ))}
+        </div>
+
+        <blockquote class="sas-quote">
+          <p>"{content.testimonial.quote}"</p>
+          <footer>
+            <cite>
+              <strong>{content.testimonial.author}</strong>
+              <span>{content.testimonial.company}</span>
+            </cite>
+            <div class="sas-quote__metric">
+              <span class="sas-quote__value">{content.testimonial.metric}</span>
+              <span class="sas-quote__label">{content.testimonial.metricLabel}</span>
+            </div>
+          </footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Specs -->
+    <section class="sas-specs">
+      <div class="sas-container">
+        <h2 class="sas-title sas-title--center">{content.techSpecs.title}</h2>
+        <div class="sas-specs__grid">
+          {content.techSpecs.specs.map(spec => (
+            <div class="sas-spec">
+              <span class="sas-spec__value">{spec.value}</span>
+              <span class="sas-spec__label">{spec.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="sas-cta">
+      <div class="sas-container">
+        <div class="sas-cta__content">
+          <h2 class="sas-cta__title">{content.finalCta.title}</h2>
+          <p class="sas-cta__desc">{content.finalCta.description}</p>
+          <div class="sas-cta__actions">
+            <a href={content.finalCta.cta_primary.url} class="sas-btn sas-btn--cta sas-btn--large">{content.finalCta.cta_primary.text}</a>
+            <a href={content.finalCta.cta_secondary.url} class="sas-btn sas-btn--ghost sas-btn--large">{content.finalCta.cta_secondary.text}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+/* Stop Agent Sprawl - Expanso Brand Design System */
+.sas {
+  --c-purple: #7C3AED;
+  --c-purple-deep: #5B21B6;
+  --c-bg: #0A0A0F;
+  --c-surface: #141419;
+  --c-border: #1E1E26;
+  --c-cyan: #06B6D4;
+  --c-green: #10B981;
+  --c-orange: #F59E0B;
+  --c-red: #EF4444;
+  --c-text: #F9FAFB;
+  --c-text-secondary: #9CA3AF;
+  --c-text-muted: #6B7280;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-display);
+  line-height: 1.6;
+}
+
+.sas-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+@media (max-width: 768px) {
+  .sas-container { padding: 0 24px; }
+}
+
+/* Utility */
+.sas-muted { color: var(--c-text-muted); }
+.sas-text--red { color: var(--c-red); }
+.sas-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; }
+.sas-dot--red { background: var(--c-red); }
+.sas-dot--cyan { background: var(--c-cyan); }
+.sas-dot--green { background: var(--c-green); }
+.sas-dot--orange { background: var(--c-orange); }
+.sas-dot--purple { background: var(--c-purple); }
+
+/* Tags */
+.sas-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-purple);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--c-purple);
+}
+.sas-tag--red { color: var(--c-red); border-color: var(--c-red); }
+.sas-tag--green { color: var(--c-green); border-color: var(--c-green); }
+
+/* Titles */
+.sas-title {
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 12px 0 0 0;
+  color: var(--c-text);
+}
+.sas-title--xl { font-size: 48px; font-weight: 700; }
+.sas-title--center { text-align: center; }
+
+/* Buttons */
+.sas-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.sas-btn svg { width: 18px; height: 18px; }
+
+.sas-btn--cta {
+  background: var(--c-orange);
+  color: #000;
+}
+.sas-btn--cta:hover {
+  background: #D97706;
+  transform: translateY(-2px);
+}
+
+.sas-btn--ghost {
+  background: transparent;
+  color: var(--c-text);
+  border: 1px solid var(--c-text-muted);
+}
+.sas-btn--ghost:hover {
+  border-color: var(--c-text);
+}
+
+.sas-btn--large {
+  padding: 18px 36px;
+  font-size: 17px;
+}
+
+/* Hero */
+.sas-hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 48px 60px;
+  position: relative;
+}
+
+.sas-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.sas-hero__title {
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  margin: 16px 0 24px 0;
+  color: var(--c-text);
+}
+
+.sas-hero__subtitle {
+  display: block;
+  font-size: 0.5em;
+  font-weight: 500;
+  color: var(--c-cyan);
+  margin-top: 8px;
+  letter-spacing: -0.01em;
+}
+
+.sas-hero__desc {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--c-text-secondary);
+  margin: 0 0 32px 0;
+  max-width: 500px;
+}
+
+.sas-hero__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sas-hero__trust {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+  font-size: 13px;
+  color: var(--c-text-muted);
+  font-family: var(--font-mono);
+}
+
+.sas-hero__trust-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--c-green);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Terminal */
+.sas-terminal {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.sas-terminal__bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--c-border);
+  background: rgba(255,255,255,0.02);
+}
+
+.sas-terminal__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.sas-terminal__dot--red { background: #FF5F56; }
+.sas-terminal__dot--yellow { background: #FFBD2E; }
+.sas-terminal__dot--green { background: #27C93F; }
+
+.sas-terminal__bar code {
+  margin-left: auto;
+  color: var(--c-text-muted);
+  font-size: 12px;
+}
+
+.sas-terminal__body {
+  padding: 20px;
+}
+
+.sas-chaos__line {
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+}
+
+.sas-chaos__divider {
+  height: 1px;
+  background: var(--c-border);
+  margin: 12px 0;
+}
+
+.sas-chaos__total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8px;
+  font-weight: 600;
+}
+
+.sas-scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--c-text-muted);
+  text-decoration: none;
+}
+.sas-scroll svg {
+  width: 24px;
+  height: 24px;
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* Problem */
+.sas-problem {
+  padding: 120px 0;
+  border-top: 1px solid var(--c-border);
+}
+
+.sas-problem__header {
+  max-width: 640px;
+  margin-bottom: 64px;
+}
+
+.sas-problem__lede {
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--c-text-secondary);
+  margin: 24px 0 0 0;
+}
+
+.sas-problem__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border: 1px solid var(--c-border);
+}
+
+.sas-pain {
+  padding: 32px;
+  border-right: 1px solid var(--c-border);
+  border-bottom: 1px solid var(--c-border);
+}
+.sas-pain:nth-child(2n) { border-right: none; }
+.sas-pain:nth-child(n+3) { border-bottom: none; }
+
+.sas-pain__num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--c-text-muted);
+  margin-bottom: 16px;
+}
+
+.sas-pain__title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: var(--c-text);
+}
+
+.sas-pain__desc {
+  font-size: 15px;
+  color: var(--c-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Solution */
+.sas-solution {
+  padding: 120px 0;
+  background: linear-gradient(180deg, var(--c-bg) 0%, rgba(124,58,237,0.03) 100%);
+}
+
+.sas-solution__intro {
+  max-width: 700px;
+  margin-bottom: 64px;
+}
+
+.sas-solution__desc {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--c-text-secondary);
+  margin: 24px 0 0 0;
+}
+
+/* Architecture diagram */
+.sas-arch {
+  margin-bottom: 64px;
+}
+
+.sas-arch__diagram {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  padding: 32px;
+  overflow-x: auto;
+}
+
+.sas-arch__svg {
+  width: 100%;
+  min-width: 700px;
+  height: auto;
+  display: block;
+}
+
+.sas-arch__caption {
+  text-align: center;
+  padding: 20px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--c-text-secondary);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-top: none;
+}
+
+/* Benefits */
+.sas-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--c-border);
+  border: 1px solid var(--c-border);
+}
+
+.sas-benefit {
+  display: flex;
+  gap: 16px;
+  padding: 24px;
+  background: var(--c-bg);
+}
+.sas-benefit svg {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  stroke: var(--c-green);
+}
+.sas-benefit strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--c-text);
+  margin-bottom: 4px;
+}
+.sas-benefit span {
+  font-size: 14px;
+  color: var(--c-text-secondary);
+  line-height: 1.5;
+}
+
+/* How It Works */
+.sas-how {
+  padding: 100px 0;
+  background: var(--c-surface);
+}
+
+.sas-steps {
+  max-width: 720px;
+  margin: 64px auto 0;
+}
+
+.sas-step {
+  display: flex;
+  gap: 32px;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--c-border);
+}
+.sas-step--last { border-bottom: none; }
+
+.sas-step__marker {
+  flex-shrink: 0;
+  width: 100px;
+  text-align: right;
+}
+
+.sas-step__num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--c-purple);
+  line-height: 1;
+}
+
+.sas-step__time {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--c-green);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 8px;
+}
+
+.sas-step__title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: var(--c-text);
+}
+
+.sas-step__desc {
+  font-size: 15px;
+  color: var(--c-text-secondary);
+  margin: 0 0 20px 0;
+  line-height: 1.6;
+}
+
+/* Code blocks */
+.sas-code {
+  position: relative;
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.sas-code pre {
+  margin: 0;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.sas-code code {
+  color: var(--c-cyan);
+  line-height: 1.7;
+}
+
+.sas-code__copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: var(--c-text-muted);
+  cursor: pointer;
+  padding: 4px;
+}
+.sas-code__copy:hover { color: var(--c-text); }
+.sas-code__copy svg { width: 16px; height: 16px; }
+
+/* Proof */
+.sas-proof {
+  padding: 100px 0;
+}
+
+.sas-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  max-width: 900px;
+  margin: 64px auto;
+  text-align: center;
+}
+
+.sas-stat__metric {
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--c-purple);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.sas-stat__label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--c-text);
+  margin: 8px 0 4px;
+}
+
+.sas-stat__desc {
+  font-size: 14px;
+  color: var(--c-text-secondary);
+}
+
+/* Quote */
+.sas-quote {
+  max-width: 800px;
+  margin: 64px auto 0;
+  padding: 40px;
+  background: var(--c-surface);
+  border-left: 3px solid var(--c-purple);
+}
+
+.sas-quote p {
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--c-text);
+  margin: 0 0 24px 0;
+  font-style: italic;
+}
+
+.sas-quote footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.sas-quote cite {
+  font-style: normal;
+}
+.sas-quote cite strong {
+  display: block;
+  font-weight: 600;
+  color: var(--c-text);
+}
+.sas-quote cite span {
+  font-size: 14px;
+  color: var(--c-text-secondary);
+}
+
+.sas-quote__metric {
+  text-align: right;
+}
+.sas-quote__value {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--c-green);
+}
+.sas-quote__label {
+  font-size: 11px;
+  color: var(--c-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Specs */
+.sas-specs {
+  padding: 80px 0;
+  background: var(--c-surface);
+}
+
+.sas-specs__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 48px;
+  border: 1px solid var(--c-border);
+}
+
+.sas-spec {
+  padding: 32px;
+  text-align: center;
+  border-right: 1px solid var(--c-border);
+}
+.sas-spec:last-child { border-right: none; }
+
+.sas-spec__value {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--c-text);
+  letter-spacing: -0.02em;
+}
+
+.sas-spec__label {
+  display: block;
+  font-size: 13px;
+  color: var(--c-text-secondary);
+  margin-top: 4px;
+}
+
+/* CTA */
+.sas-cta {
+  padding: 120px 0;
+  text-align: center;
+}
+
+.sas-cta__content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.sas-cta__title {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px 0;
+  color: var(--c-text);
+}
+
+.sas-cta__desc {
+  font-size: 18px;
+  color: var(--c-text-secondary);
+  margin: 0 0 32px 0;
+}
+
+.sas-cta__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .sas-hero { padding: 60px 24px 40px; }
+  .sas-hero__grid { grid-template-columns: 1fr; gap: 48px; }
+  .sas-hero__title { font-size: 48px; }
+  .sas-hero__viz { order: -1; }
+  .sas-benefits { grid-template-columns: 1fr; }
+  .sas-specs__grid { grid-template-columns: repeat(2, 1fr); }
+  .sas-spec:nth-child(2) { border-right: none; }
+  .sas-spec:nth-child(1), .sas-spec:nth-child(2) { border-bottom: 1px solid var(--c-border); }
+}
+
+@media (max-width: 640px) {
+  .sas-hero__title { font-size: 36px; }
+  .sas-problem__grid { grid-template-columns: 1fr; }
+  .sas-pain { border-right: none !important; border-bottom: 1px solid var(--c-border) !important; }
+  .sas-pain:last-child { border-bottom: none !important; }
+  .sas-stats { grid-template-columns: 1fr; gap: 40px; }
+  .sas-stat__metric { font-size: 48px; }
+  .sas-specs__grid { grid-template-columns: 1fr; }
+  .sas-spec { border-right: none; border-bottom: 1px solid var(--c-border); }
+  .sas-spec:last-child { border-bottom: none; }
+  .sas-step { flex-direction: column; gap: 16px; }
+  .sas-step__marker { width: auto; text-align: left; display: flex; align-items: baseline; gap: 16px; }
+  .sas-quote footer { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .sas-quote__metric { text-align: left; }
+  .sas-title--xl { font-size: 36px; }
+}
+</style>
+
+<script>
+  // Copy to clipboard functionality
+  document.querySelectorAll('.sas-code__copy').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.dataset.code || btn.previousElementSibling?.textContent?.trim();
+      if (code) {
+        navigator.clipboard.writeText(code);
+        // Visual feedback could be added here
+      }
+    });
+  });
+</script>
